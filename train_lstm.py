@@ -28,5 +28,5 @@ model.add(Dropout(0.2))
 model.add(Dense(units=1, activation='sigmoid'))
 model.compile(optimizer='adam', metrics=['accuracy'], loss='binary_crossentropy')
 
-model.fit(X_train, y_train, epochs=16, batch_size=32)
+model.fit(X, y, epochs=16, batch_size=32)
 model.save('lstm_activity_recognize.h5')
