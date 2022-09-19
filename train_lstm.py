@@ -3,15 +3,19 @@ import pandas as pd
 from tensorflow.keras.layers import LSTM, Dense, Dropout
 from tensorflow.keras.models import Sequential
 
+no_of_timestep = 10
 handswing_df = pd.read_csv('HANDSWING.txt')
+do_nothing_df = pd.read_csv('./DO-NOTHING.txt')
+
+handswing_dataset = handswing_df.iloc[:, 1:].values
+do_nothing_dataset = do_nothing_df.iloc[:, 1:].values
 
 X, y = [], []
-dataset = handswing_df.iloc[:, 1:].values
-no_of_timestep = 10
-no_of_samples = len(dataset)
-
-for i in range(no_of_timestep, no_of_samples, no_of_timestep):
-    X.append(dataset[i-no_of_timestep:i, :])
+for i in range(no_of_timestep, len(handswing_dataset), no_of_timestep):
+    X.append(handswing_dataset[i-no_of_timestep:i, :])
+    y.append(1)
+for i in range(no_of_timestep, len(do_nothing_dataset), no_of_timestep):
+    X.append(do_nothing_dataset[i-no_of_timestep:i, :])
     y.append(0)
 
 X, y = np.array(X), np.array(y)
