@@ -1,20 +1,10 @@
-FROM ubuntu:20.04
-
-ENV TERM=xterm
-ENV DEBIAN_FRONTEND=noninteractive
+FROM python:3 
 
 # Install cv2 dependencies in Docker (Fix libGL.so.1 issue)
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libopencv-dev \
-    python3-opencv \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt-get update
+RUN apt-get install ffmpeg libsm6 libxext6  -y
 
-WORKDIR /app
-ADD . /app
-
-ENV PYTHONUNBUFFERED=1
-ENV PYTHONPATH=/app
+WORKDIR /usr/src/app
 
 COPY . .
 
