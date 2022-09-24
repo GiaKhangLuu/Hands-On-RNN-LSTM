@@ -1,3 +1,9 @@
+# 🙋🏻 🙍🏻 Introduction
+
+Get my hand dirty with LSTM model and Docker.
+
+Use LSTM to recognize 2 activities (*hand-swing* and *do-nothing*) from live video. 
+
 # 🚀 Running
 
 Install all packages
@@ -19,6 +25,15 @@ But MacOS do not have path `/dev/video0`. So the process to let docker access ca
 Following the next steps everytime when we want to connect a webcam to a docker container.
 
 Assume that `socat, xquartz, docker-machine, VirtualBox and VirtualBox Extension` have been installed:
+
+First create a virtual machine using VirtualBox:
+
+`docker-machine create -d virtualbox
+  --virtualbox-cpu-count=2
+  --virtualbox-memory=2048 
+  --virtualbox-disk-size=100000
+  --virtualbox-boot2docker-url https://github.com/gzupark/boot2docker-webcam-mac/releases/download/18.06.1-ce-usb/boot2docker.iso 
+  <docker-machine-name>`
 
 1. `open -a XQuartz`
 2. From the XQuartz terminal, enter `socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\"`
@@ -45,7 +60,21 @@ When everything works, we can now run this repo:
 
 `docker run --rm -it --device=/dev/video0:/dev/video0 -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$IP:0 giakhang/my-first-image:myfirstimagepush`
 
-# References
+# 🤖 Demo 
+
+**Recognize do-nothing activity**
+
+<picture>
+  <img alt="Predict do-nothing" width="500px" src="./asset/demo_images/pred-do-nothing.png"/>
+</picture>
+
+**Recognize hand-swing activity**
+
+<picture>
+  <img alt="Predict hand-swing" width="500px" src="./asset/demo_images/pred-swing-hand.png"/>
+</picture>
+
+# 📚 References
 [https://www.youtube.com/watch?v=bxrc1otsKIM](url)
 
 [https://www.youtube.com/watch?v=B5wf8p1oezA](url)
